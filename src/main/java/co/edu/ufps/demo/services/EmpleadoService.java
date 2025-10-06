@@ -1,12 +1,21 @@
 package co.edu.ufps.demo.services;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import co.edu.ufps.demo.models.Empleado;
+import co.edu.ufps.demo.repositories.EmpleadoRepository;
 
 @Service
 public class EmpleadoService {
 	
-	public String getAllEmpleados() {
-		return "All empleados ofrom Service";
+	@Autowired
+	EmpleadoRepository empleadoRepository;
+	
+	public List<Empleado> getAllEmpleados() {
+		return empleadoRepository.findAll();
 	}
 
 }

@@ -1,10 +1,13 @@
 package co.edu.ufps.demo.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import co.edu.ufps.demo.models.Empleado;
 import co.edu.ufps.demo.services.EmpleadoService;
 
 @RestController
@@ -15,7 +18,7 @@ public class EmpleadoController {
 	EmpleadoService empleadoService;
 	
 	@GetMapping()
-	public String getAllEmpleados() {
+	public List<Empleado> getAllEmpleados() {
 		
 		return empleadoService.getAllEmpleados();
 		
