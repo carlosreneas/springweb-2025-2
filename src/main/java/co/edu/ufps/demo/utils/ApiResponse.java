@@ -1,0 +1,21 @@
+package co.edu.ufps.demo.utils;
+
+import java.time.LocalDateTime;
+
+import lombok.Data;
+
+@Data
+public class ApiResponse<T> {
+    private String status;
+    private String message;
+    private LocalDateTime timestamp;
+    private T data;
+
+    public ApiResponse(String status, String message, T data) {
+        this.status = status;
+        this.message = message;
+        this.timestamp = LocalDateTime.now();
+        this.data = data;
+    }
+
+}

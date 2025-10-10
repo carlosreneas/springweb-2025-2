@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import co.edu.ufps.demo.models.Empleado;
 import co.edu.ufps.demo.services.EmpleadoService;
+import co.edu.ufps.demo.utils.ApiResponse;
 
 @RestController
 @RequestMapping("/empleados")
@@ -23,16 +24,20 @@ public class EmpleadoController {
 	EmpleadoService empleadoService;
 	
 	@GetMapping()
-	public List<Empleado> getAllEmpleados() {
-		
-		return empleadoService.getAllEmpleados();
-		
+	public ApiResponse<List<Empleado>> getAllEmpleados() {
+		List<Empleado> empleados = empleadoService.getAllEmpleados();
+	    return new ApiResponse<>("success", "Lista de empleados obtenida correctamente", empleados);	
 	}
 	
 	@GetMapping("/{id}")
-	public Empleado getEmpleado(@PathVariable("id") Integer id) {
+	public ApiResponse<Empleado> getEmpleado(@PathVariable("id") Integer id) {
 
-		return empleadoService.getEmpleado(id);
+		Empleado empleado = empleadoService.getEmpleado(id);
+		
+		if (empleado == null) {
+	        return new ApiResponse<>("error", "Empleado no encontrado", null);
+	    }
+	    return new ApiResponse<>("success", "Empleado encontrado", empleado);
 		
 	}
 	
