@@ -2,9 +2,11 @@ package co.edu.ufps.demo.models;
 
 import java.util.Date;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
@@ -24,5 +26,10 @@ public class Empleado {
 	
 	@Column(name="fecha_nacimiento")
 	private Date fechaNacimiento;
+	
+	@ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "tipo_empleado_id", nullable = false)
+	@JsonIgnoreProperties({"empleados"})
+    private TipoEmpleado tipoEmpleado;
 
 }
