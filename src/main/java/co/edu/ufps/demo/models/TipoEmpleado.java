@@ -22,10 +22,13 @@ public class TipoEmpleado {
 
     @Column(name = "descripcion", columnDefinition = "text")
     private String descripcion;
+    
+    @Column(name = "observacion", columnDefinition = "text")
+    private String observacion;
 
 
  // Navegación inversa (opcional)
-    //@JsonIgnore
+    @JsonIgnore
     //@JsonManagedReference
     @OneToMany(mappedBy = "tipoEmpleado", 
     		cascade = CascadeType.ALL, orphanRemoval = true)

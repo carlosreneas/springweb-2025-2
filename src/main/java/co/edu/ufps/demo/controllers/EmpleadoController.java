@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import co.edu.ufps.demo.models.Dependencia;
 import co.edu.ufps.demo.models.Empleado;
 import co.edu.ufps.demo.services.EmpleadoService;
 import co.edu.ufps.demo.utils.ApiResponse;
@@ -59,6 +60,20 @@ public class EmpleadoController {
 	public Empleado deleteEmpleado(@PathVariable("id") Integer id) {
 		
 		return empleadoService.deleteEmpleado(id);
+		
+	}
+	
+	
+	
+	@GetMapping("/{id}/dependencias")
+	public ApiResponse<List<Dependencia>> getDependenciasEmpleado(@PathVariable("id") Integer id) {
+
+		Empleado empleado = empleadoService.getEmpleado(id);
+		
+		if (empleado == null) {
+	        return new ApiResponse<>("error", "Empleado no encontrado", null);
+	    }
+	    return new ApiResponse<>("success", "Empleado encontrado", empleado.getDependencias());
 		
 	}
 

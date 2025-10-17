@@ -1,6 +1,7 @@
 package co.edu.ufps.demo.models;
 
 import java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -31,5 +32,13 @@ public class Empleado {
     @JoinColumn(name = "tipo_empleado_id", nullable = false)
 	@JsonIgnoreProperties({"empleados"})
     private TipoEmpleado tipoEmpleado;
+	
+	@JsonIgnore
+	@ManyToMany
+	@JoinTable(
+			  name = "dependencia_empleado", 
+			  joinColumns = @JoinColumn(name = "empleado_id"), 
+			  inverseJoinColumns = @JoinColumn(name = "dependencia_id"))
+	private List<Dependencia> dependencias;
 
 }
