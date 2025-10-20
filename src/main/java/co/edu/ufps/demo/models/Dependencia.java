@@ -22,6 +22,36 @@ public class Dependencia {
     @JsonIgnore
     @ManyToMany(mappedBy = "dependencias")
     List<Empleado> empleados;
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Dependencia dependencia = (Dependencia) o;
+        return id.equals(dependencia.id);  // Compara por id
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();  // Usamos el id para el hashCode
+    }
+    
+    public void addEmpleado(Empleado empleado) {
+		this.empleados.add(empleado);
+	}
+	
+	public void removeEmpleado(Empleado empleado) {
+		this.empleados.remove(empleado);
+	}
+	
+	public Empleado searchEmpleado(Empleado empleadoParam) {
+		for (Empleado empleado : this.empleados) {
+            if (empleado.getId().equals(empleadoParam.getId())) {
+                return empleado;
+            }
+        }
+		return null;
+	}
 
 }
 

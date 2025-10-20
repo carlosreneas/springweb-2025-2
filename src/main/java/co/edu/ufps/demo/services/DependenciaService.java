@@ -8,13 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.edu.ufps.demo.models.Dependencia;
+import co.edu.ufps.demo.models.Empleado;
 import co.edu.ufps.demo.repositories.DependenciaRepository;
+import co.edu.ufps.demo.repositories.EmpleadoRepository;
 
 @Service
 public class DependenciaService {
 	
 	@Autowired
 	DependenciaRepository dependenciaRepository;
+	
+	@Autowired
+	EmpleadoRepository empleadoRepository;
 	
 	public List<Dependencia> getAllDependencias() {
 		return dependenciaRepository.findAll();
@@ -55,6 +60,46 @@ public class DependenciaService {
 		return dependencia;
 				
 	}
+	
+	
+	public Dependencia addEmpleado(Integer id, Integer empleadoParam) {
+		
+		Empleado empleado = empleadoRepository.findById(empleadoParam).orElse(null);
+		
+		Dependencia dependencia = dependenciaRepository.findById(id).orElse(null);
+		
+		Empleado empleadoBuscado = dependencia.searchEmpleado(empleado);
+		
+		if(empleadoBuscado!=null){
+			return null;
+		} else {
+			empleado.addDependencia(dependencia);
+			dependencia.addEmpleado(empleado);
+			// TODO Auto-generated method stub
+			dependenciaRepository.save(dependencia);
+			
+			return dependencia;
+		}
+	}
+
+
+	public Dependencia removeEmpleado(Integer id, Integer empleadoParam) {
+		
+		Empleado empleado = empleadoRepository.findById(empleadoParam).orElse(null);
+		
+		Dependencia dependencia = dependenciaRepository.findById(id).orElse(null);
+		
+		Empleado empleadoBuscado = dependencia.searchEmpleado(empleado);
+		
+		if(empleadoBuscado!=null){
+			dependencia.addEmpleado(empleado);
+			// TODO Auto-generated method stub
+			dependenciaRepository.save(dependencia);
+			return dependencia;
+		}
+		return null;
+	}
+	
 	
 	
 

@@ -40,5 +40,37 @@ public class Empleado {
 			  joinColumns = @JoinColumn(name = "empleado_id"), 
 			  inverseJoinColumns = @JoinColumn(name = "dependencia_id"))
 	private List<Dependencia> dependencias;
+	
+	
+	public void addDependencia(Dependencia dependencia) {
+		this.dependencias.add(dependencia);
+	}
+	
+	public void removeDependencia(Dependencia dependencia) {
+		this.dependencias.remove(dependencia);
+	}
+	
+	public Dependencia searchDependencia(Dependencia dependenciaParam) {
+		for (Dependencia dependencia : this.dependencias) {
+            if (dependencia.getId().equals(dependenciaParam.getId())) {
+                return dependencia;
+            }
+        }
+		return null;
+	}
+	
+	// Sobrecarga de equals() para comparar por id o nombre
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Empleado empleado = (Empleado) o;
+        return id.equals(empleado.id);  // Compara por id
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();  // Usamos el id para el hashCode
+    }
 
 }

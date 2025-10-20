@@ -63,8 +63,6 @@ public class EmpleadoController {
 		
 	}
 	
-	
-	
 	@GetMapping("/{id}/dependencias")
 	public ApiResponse<List<Dependencia>> getDependenciasEmpleado(@PathVariable("id") Integer id) {
 
@@ -74,6 +72,30 @@ public class EmpleadoController {
 	        return new ApiResponse<>("error", "Empleado no encontrado", null);
 	    }
 	    return new ApiResponse<>("success", "Empleado encontrado", empleado.getDependencias());
+		
+	}
+	
+	
+	@PostMapping("/{id}/dependencias/{dependencia}")
+	public ApiResponse<Empleado> addDependenciaEmpleado(@PathVariable("id") Integer id, @PathVariable("dependencia") Integer dependencia) {
+		
+		Empleado empleado = empleadoService.addDependencia(id, dependencia);
+		if (empleado == null) {
+			return new ApiResponse<>("error", "Se ha presentado un problema al intentar agregar la dependencia", empleado);
+		}
+		return new ApiResponse<>("success", "Dependencia agregada al empleado", empleado);
+		
+	}
+	
+	
+	@DeleteMapping("/{id}/dependencias/{dependencia}")
+	public ApiResponse<Empleado> deleteDependenciaEmpleado(@PathVariable("id") Integer id, @PathVariable("dependencia") Integer dependencia) {
+		
+		Empleado empleado = empleadoService.removeDependencia(id, dependencia);
+		if (empleado == null) {
+			return new ApiResponse<>("error", "Se ha presentado un problema al intentar eliminar la dependencia", empleado);
+		}
+		return new ApiResponse<>("success", "Dependencia eliminada correctamente", empleado);
 		
 	}
 
